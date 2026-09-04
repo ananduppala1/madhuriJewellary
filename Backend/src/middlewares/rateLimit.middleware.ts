@@ -1,4 +1,9 @@
-import rateLimit, { type Options } from "express-rate-limit";
+// The named export, not the default one: express-rate-limit ships both, and
+// only the named export survives being resolved through the package's
+// CommonJS declarations, which is what Vercel's function builder does. A
+// default import widens to the module namespace there and stops being
+// callable (TS2349), even though it builds fine locally.
+import { rateLimit, type Options } from "express-rate-limit";
 import { env } from "../config/env.js";
 import { ApiError } from "../utils/ApiError.js";
 
