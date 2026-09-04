@@ -1,4 +1,4 @@
-import type { CacheMetricsSnapshot } from "./cache.types.ts";
+import type { CacheMetricsSnapshot } from "./cache.types.js";
 
 /**
  * Counters, not a metrics pipeline. They exist so `/health` can answer "is the

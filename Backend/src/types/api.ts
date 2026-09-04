@@ -4,7 +4,7 @@ import type {
   GalleryCategory,
   GallerySpan,
   ProductBadge,
-} from "./database.ts";
+} from "./database.js";
 
 /* ── public shapes ─────────────────────────────────────────── */
 

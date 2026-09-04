@@ -1,6 +1,6 @@
 import type { PostgrestError } from "@supabase/supabase-js";
-import { logger } from "../config/logger.ts";
-import { ApiError } from "../utils/ApiError.ts";
+import { logger } from "../config/logger.js";
+import { ApiError } from "../utils/ApiError.js";
 
 /**
  * Postgres error codes are useful to us and dangerous to a client — they name

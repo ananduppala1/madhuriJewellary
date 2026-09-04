@@ -1,12 +1,12 @@
-import * as invalidate from "../cache/cache.invalidation.ts";
-import * as collectionRepo from "../repositories/collection.repository.ts";
-import * as productRepo from "../repositories/product.repository.ts";
-import { CLOUDINARY_FOLDERS } from "../config/cloudinary.ts";
-import { MAX_IMAGES_PER_PRODUCT } from "../constants/index.ts";
-import type { ProductImageRow, ProductRow } from "../types/database.ts";
-import { ApiError } from "../utils/ApiError.ts";
-import { slugify } from "../utils/slug.ts";
-import * as media from "./cloudinary.service.ts";
+import * as invalidate from "../cache/cache.invalidation.js";
+import * as collectionRepo from "../repositories/collection.repository.js";
+import * as productRepo from "../repositories/product.repository.js";
+import { CLOUDINARY_FOLDERS } from "../config/cloudinary.js";
+import { MAX_IMAGES_PER_PRODUCT } from "../constants/index.js";
+import type { ProductImageRow, ProductRow } from "../types/database.js";
+import { ApiError } from "../utils/ApiError.js";
+import { slugify } from "../utils/slug.js";
+import * as media from "./cloudinary.service.js";
 
 export type UploadFile = { buffer: Buffer; originalname: string };
 

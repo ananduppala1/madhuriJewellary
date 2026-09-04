@@ -3,8 +3,8 @@
 // module namespace instead of the class. `Redis` is exported by name and works
 // identically under both the typecheck and the build configurations.
 import { Redis, type RedisOptions } from "ioredis";
-import { cacheEnabled, env } from "./env.ts";
-import { logger } from "./logger.ts";
+import { cacheEnabled, env, isServerless } from "./env.js";
+import { logger } from "./logger.js";
 
 /**
  * One Redis connection for the whole process.
@@ -67,6 +67,23 @@ function safeReason(error: unknown): string {
   return error.name || "error";
 }
 
+/**
+ * A loopback address is reachable from a laptop and from a container that runs
+ * Redis as a sidecar. It is never reachable from a serverless function, where
+ * dialling it costs a full connect timeout on every cold start and can only
+ * ever fail. Detecting it here turns a recurring multi-second stall into one
+ * log line and a straight-to-database read path.
+ */
+function unreachableFromHere(url: string): boolean {
+  if (!isServerless) return false;
+  try {
+    const { hostname } = new URL(url);
+    return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
+  } catch {
+    return false;
+  }
+}
+
 export function initRedis(): Redis | null {
   if (!cacheEnabled || !env.REDIS_URL) {
     health = "disabled";
@@ -77,6 +94,15 @@ export function initRedis(): Redis | null {
   }
 
   if (client) return client;
+
+  if (unreachableFromHere(env.REDIS_URL)) {
+    health = "disabled";
+    logger.warn(
+      "Cache disabled: REDIS_URL points at localhost, which a serverless function cannot reach. " +
+        "Point it at a hosted Redis (rediss://...) or set REDIS_ENABLED=false.",
+    );
+    return null;
+  }
 
   const instance = new Redis(env.REDIS_URL, buildOptions(env.REDIS_URL));
 
@@ -121,6 +147,25 @@ export function initRedis(): Redis | null {
 /** The shared client, or null when caching is switched off entirely. */
 export function getRedis(): Redis | null {
   return client;
+}
+
+/**
+ * Connect on first use rather than at boot.
+ *
+ * `initRedis()` used to be called from server.ts only, which meant that on a
+ * serverless host - where server.ts never runs - the client stayed null and the
+ * cache silently did nothing for the life of the deployment. Every read went to
+ * Supabase and `/health` reported the cache as connecting forever.
+ *
+ * Calling this from the cache layer instead makes the connection open on the
+ * first request an instance handles, and be reused by every request after it.
+ * `initRedis()` is idempotent, so a long-lived server that already called it at
+ * boot is unaffected.
+ */
+export function ensureRedis(): Redis | null {
+  if (client) return client;
+  if (!cacheEnabled) return null;
+  return initRedis();
 }
 
 /** True only when a command has a realistic chance of succeeding right now. */

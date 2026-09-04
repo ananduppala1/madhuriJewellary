@@ -1,6 +1,6 @@
-import { adminDb, publicDb } from "../config/supabase.ts";
-import type { Database, GalleryCategory, GalleryItemRow } from "../types/database.ts";
-import { raise, unwrapList, unwrapMaybe } from "./helpers.ts";
+import { adminDb, publicDb } from "../config/supabase.js";
+import type { Database, GalleryCategory, GalleryItemRow } from "../types/database.js";
+import { raise, unwrapList, unwrapMaybe } from "./helpers.js";
 
 const PUBLIC_COLUMNS =
   "id, caption, category, secure_url, width, height, span, sort_order";

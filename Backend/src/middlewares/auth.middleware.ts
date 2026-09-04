@@ -1,9 +1,9 @@
 import type { Request, RequestHandler } from "express";
-import { ACCESS_COOKIE } from "../constants/index.ts";
-import { resolveAdminFromToken } from "../services/auth.service.ts";
-import type { AdminRole } from "../types/database.ts";
-import { ApiError } from "../utils/ApiError.ts";
-import { asyncHandler } from "../utils/asyncHandler.ts";
+import { ACCESS_COOKIE } from "../constants/index.js";
+import { resolveAdminFromToken } from "../services/auth.service.js";
+import type { AdminRole } from "../types/database.js";
+import { ApiError } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 /**
  * The cookie is the supported transport. A bearer header is accepted as well so

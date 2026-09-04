@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import { ACCESS_COOKIE, REFRESH_COOKIE } from "../constants/index.ts";
-import * as authService from "../services/auth.service.ts";
-import { ApiError } from "../utils/ApiError.ts";
-import { asyncHandler } from "../utils/asyncHandler.ts";
-import { message, ok } from "../utils/response.ts";
+import { ACCESS_COOKIE, REFRESH_COOKIE } from "../constants/index.js";
+import * as authService from "../services/auth.service.js";
+import { ApiError } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { message, ok } from "../utils/response.js";
 
 /**
  * No response from this controller ever contains a token. The browser receives

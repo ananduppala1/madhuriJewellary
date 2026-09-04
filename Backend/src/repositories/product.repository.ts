@@ -1,8 +1,8 @@
-import { adminDb, publicDb } from "../config/supabase.ts";
-import type { Database, ProductBadge, ProductImageRow, ProductRow } from "../types/database.ts";
-import { ADMIN_PAGE_BOUNDS, toRange } from "../utils/pagination.ts";
-import { escapeLikePattern } from "../utils/search.ts";
-import { raise, unwrapList, unwrapMaybe } from "./helpers.ts";
+import { adminDb, publicDb } from "../config/supabase.js";
+import type { Database, ProductBadge, ProductImageRow, ProductRow } from "../types/database.js";
+import { ADMIN_PAGE_BOUNDS, toRange } from "../utils/pagination.js";
+import { escapeLikePattern } from "../utils/search.js";
+import { raise, unwrapList, unwrapMaybe } from "./helpers.js";
 
 type ProductInsert = Database["public"]["Tables"]["products"]["Insert"];
 type ProductUpdate = Database["public"]["Tables"]["products"]["Update"];

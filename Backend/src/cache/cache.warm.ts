@@ -1,6 +1,6 @@
-import { logger } from "../config/logger.ts";
-import * as catalogue from "../services/catalogue.service.ts";
-import * as publicService from "../services/public.service.ts";
+import { logger } from "../config/logger.js";
+import * as catalogue from "../services/catalogue.service.js";
+import * as publicService from "../services/public.service.js";
 
 /**
  * Deliberately minimal.

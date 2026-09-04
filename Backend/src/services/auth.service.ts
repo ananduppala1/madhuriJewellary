@@ -1,10 +1,10 @@
 import type { CookieOptions, Response } from "express";
-import { env, isProduction } from "../config/env.ts";
-import { logger } from "../config/logger.ts";
-import { adminDb, authClient } from "../config/supabase.ts";
-import { ACCESS_COOKIE, REFRESH_COOKIE } from "../constants/index.ts";
-import type { AuthenticatedAdmin } from "../types/api.ts";
-import { ApiError } from "../utils/ApiError.ts";
+import { env, isProduction } from "../config/env.js";
+import { logger } from "../config/logger.js";
+import { adminDb, authClient } from "../config/supabase.js";
+import { ACCESS_COOKIE, REFRESH_COOKIE } from "../constants/index.js";
+import type { AuthenticatedAdmin } from "../types/api.js";
+import { ApiError } from "../utils/ApiError.js";
 
 /**
  * Supabase Auth issues the tokens; this service keeps them in HTTP-only

@@ -1,4 +1,4 @@
-import type { CacheFamily } from "./cache.constants.ts";
+import type { CacheFamily } from "./cache.constants.js";
 
 /**
  * What goes into Redis. The envelope carries the DTO version so a deploy that

@@ -1,4 +1,4 @@
-import { env } from "../config/env.ts";
+import { env } from "../config/env.js";
 
 /**
  * Every tunable the cache layer has, in one file.

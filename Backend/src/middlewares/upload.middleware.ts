@@ -1,7 +1,7 @@
 import multer from "multer";
-import { MAX_UPLOAD_BYTES } from "../config/env.ts";
-import { ALLOWED_IMAGE_EXT, ALLOWED_IMAGE_MIME, MAX_IMAGES_PER_PRODUCT } from "../constants/index.ts";
-import { ApiError } from "../utils/ApiError.ts";
+import { MAX_UPLOAD_BYTES } from "../config/env.js";
+import { ALLOWED_IMAGE_EXT, ALLOWED_IMAGE_MIME, MAX_IMAGES_PER_PRODUCT } from "../constants/index.js";
+import { ApiError } from "../utils/ApiError.js";
 
 /**
  * Files are held in memory and streamed straight to Cloudinary — nothing is

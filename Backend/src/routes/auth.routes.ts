@@ -1,10 +1,10 @@
 import { Router } from "express";
-import * as controller from "../controllers/auth.controller.ts";
-import { authenticate } from "../middlewares/auth.middleware.ts";
-import { noStore } from "../middlewares/cache.middleware.ts";
-import { authLimiter } from "../middlewares/rateLimit.middleware.ts";
-import { validate } from "../middlewares/validate.middleware.ts";
-import { loginSchema } from "../validators/index.ts";
+import * as controller from "../controllers/auth.controller.js";
+import { authenticate } from "../middlewares/auth.middleware.js";
+import { noStore } from "../middlewares/cache.middleware.js";
+import { authLimiter } from "../middlewares/rateLimit.middleware.js";
+import { validate } from "../middlewares/validate.middleware.js";
+import { loginSchema } from "../validators/index.js";
 
 export const authRouter: Router = Router();
 

@@ -1,10 +1,10 @@
 import { Router } from "express";
-import * as controller from "../controllers/admin.controller.ts";
-import { authenticate, requireRole } from "../middlewares/auth.middleware.ts";
-import { noStore } from "../middlewares/cache.middleware.ts";
-import { adminWriteLimiter, uploadLimiter } from "../middlewares/rateLimit.middleware.ts";
-import { uploadProductImages, uploadSingleImage } from "../middlewares/upload.middleware.ts";
-import { validate } from "../middlewares/validate.middleware.ts";
+import * as controller from "../controllers/admin.controller.js";
+import { authenticate, requireRole } from "../middlewares/auth.middleware.js";
+import { noStore } from "../middlewares/cache.middleware.js";
+import { adminWriteLimiter, uploadLimiter } from "../middlewares/rateLimit.middleware.js";
+import { uploadProductImages, uploadSingleImage } from "../middlewares/upload.middleware.js";
+import { validate } from "../middlewares/validate.middleware.js";
 import {
   adminGalleryQuery,
   adminProductQuery,
@@ -21,7 +21,7 @@ import {
   updateGallerySchema,
   updateProductSchema,
   updateSiteSettingsSchema,
-} from "../validators/index.ts";
+} from "../validators/index.js";
 
 /**
  * Everything below is gated twice — a valid Supabase session, then an active

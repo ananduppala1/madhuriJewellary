@@ -1,10 +1,10 @@
-import { adminDb, publicDb } from "../config/supabase.ts";
+import { adminDb, publicDb } from "../config/supabase.js";
 import type {
   CollectionHighlightRow,
   CollectionRow,
   Database,
-} from "../types/database.ts";
-import { raise, unwrapList, unwrapMaybe } from "./helpers.ts";
+} from "../types/database.js";
+import { raise, unwrapList, unwrapMaybe } from "./helpers.js";
 
 type CollectionInsert = Database["public"]["Tables"]["collections"]["Insert"];
 type CollectionUpdate = Database["public"]["Tables"]["collections"]["Update"];

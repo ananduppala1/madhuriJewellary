@@ -1,12 +1,18 @@
 {
-  "include": ["src/**/*.ts", "scripts/**/*.ts", "eslint.config.js"],
+  "include": ["src/**/*.ts", "scripts/**/*.ts"],
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
+    /**
+     * NodeNext everywhere — the same resolution the compiled output actually
+     * runs under on Node and on Vercel. Relative imports carry an explicit
+     * `.js` extension, which is what Node ESM requires and what every other
+     * toolchain (tsx, esbuild, Vercel's function builder) understands without
+     * special configuration.
+     */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "lib": ["ES2023"],
     "types": ["node"],
-    "moduleResolution": "Bundler",
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "verbatimModuleSyntax": false,
     "noEmit": true,
@@ -18,10 +24,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": false,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "exactOptionalPropertyTypes": false
   }
 }

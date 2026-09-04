@@ -1,5 +1,5 @@
 import type { RequestHandler } from "express";
-import { PUBLIC_CACHE_CONTROL } from "../constants/index.ts";
+import { PUBLIC_CACHE_CONTROL } from "../constants/index.js";
 
 /**
  * Public reads are safe to cache briefly at the edge. Admin edits show up

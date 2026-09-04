@@ -1,13 +1,13 @@
 import { Router } from "express";
-import * as controller from "../controllers/public.controller.ts";
-import { publicCache } from "../middlewares/cache.middleware.ts";
-import { validate } from "../middlewares/validate.middleware.ts";
+import * as controller from "../controllers/public.controller.js";
+import { publicCache } from "../middlewares/cache.middleware.js";
+import { validate } from "../middlewares/validate.middleware.js";
 import {
   publicCollectionQuery,
   publicGalleryQuery,
   publicProductQuery,
   slugParam,
-} from "../validators/index.ts";
+} from "../validators/index.js";
 
 /**
  * Read-only, unauthenticated, and served through the anon Supabase client so

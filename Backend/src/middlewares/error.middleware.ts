@@ -1,9 +1,9 @@
 import type { ErrorRequestHandler, RequestHandler } from "express";
 import { MulterError } from "multer";
 import { ZodError } from "zod";
-import { isProduction } from "../config/env.ts";
-import { logger } from "../config/logger.ts";
-import { ApiError, isApiError } from "../utils/ApiError.ts";
+import { isProduction } from "../config/env.js";
+import { logger } from "../config/logger.js";
+import { ApiError, isApiError } from "../utils/ApiError.js";
 
 export const notFoundHandler: RequestHandler = (req, _res, next) => {
   next(ApiError.notFound(`No route matches ${req.method} ${req.path}`));

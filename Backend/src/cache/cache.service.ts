@@ -1,6 +1,6 @@
 import type { Redis } from "ioredis";
-import { logger } from "../config/logger.ts";
-import { getRedis, isRedisReady } from "../config/redis.ts";
+import { logger } from "../config/logger.js";
+import { ensureRedis, isRedisReady } from "../config/redis.js";
 import {
   CACHE_DTO_VERSION,
   CACHE_LOCK_POLL_MS,
@@ -10,9 +10,9 @@ import {
   CACHE_TTL_DEFAULT,
   CACHE_VERSION_HASH,
   type CacheFamily,
-} from "./cache.constants.ts";
-import { cacheMetrics } from "./cache.metrics.ts";
-import type { CacheDescriptor, CacheEnvelope } from "./cache.types.ts";
+} from "./cache.constants.js";
+import { cacheMetrics } from "./cache.metrics.js";
+import type { CacheDescriptor, CacheEnvelope } from "./cache.types.js";
 
 /**
  * The only module that speaks Redis.
@@ -25,7 +25,10 @@ import type { CacheDescriptor, CacheEnvelope } from "./cache.types.ts";
 /* ── low-level helpers ─────────────────────────────────────── */
 
 function ready(): Redis | null {
-  const client = getRedis();
+  // `ensureRedis` opens the connection on first use. On a long-lived server it
+  // was already opened at boot and this is a null check; on a serverless host
+  // it is what makes the cache exist at all.
+  const client = ensureRedis();
   return client && isRedisReady() ? client : null;
 }
 

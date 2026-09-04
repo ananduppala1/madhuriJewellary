@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { RequestHandler } from "express";
-import { logger } from "../config/logger.ts";
+import { logger } from "../config/logger.js";
 
 /**
  * Tags each request and logs a single line when it completes. No headers,

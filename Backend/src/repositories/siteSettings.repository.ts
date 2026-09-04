@@ -1,6 +1,6 @@
-import { adminDb, publicDb } from "../config/supabase.ts";
-import type { Database, SiteSettingsRow } from "../types/database.ts";
-import { raise, unwrapMaybe } from "./helpers.ts";
+import { adminDb, publicDb } from "../config/supabase.js";
+import type { Database, SiteSettingsRow } from "../types/database.js";
+import { raise, unwrapMaybe } from "./helpers.js";
 
 /**
  * Exactly one row exists, guaranteed by the `singleton` unique constraint. The

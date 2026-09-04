@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import * as catalogue from "../services/catalogue.service.ts";
-import * as publicService from "../services/public.service.ts";
-import type { GalleryCategory, ProductBadge } from "../types/database.ts";
-import { asyncHandler } from "../utils/asyncHandler.ts";
-import { buildMeta, ok, okList } from "../utils/response.ts";
+import * as catalogue from "../services/catalogue.service.js";
+import * as publicService from "../services/public.service.js";
+import type { GalleryCategory, ProductBadge } from "../types/database.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { buildMeta, ok, okList } from "../utils/response.js";
 
 /**
  * Controllers stayed thin. Caching happens a layer down, in the services, so

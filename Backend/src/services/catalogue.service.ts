@@ -1,16 +1,16 @@
-import { cacheKeys, getOrSet } from "../cache/index.ts";
-import * as collectionRepo from "../repositories/collection.repository.ts";
-import * as productRepo from "../repositories/product.repository.ts";
+import { cacheKeys, getOrSet } from "../cache/index.js";
+import * as collectionRepo from "../repositories/collection.repository.js";
+import * as productRepo from "../repositories/product.repository.js";
 import type {
   PublicCollection,
   PublicCollectionSummary,
   PublicImage,
   PublicProduct,
   PublicProductPage,
-} from "../types/api.ts";
-import type { ProductBadge, ProductImageRow } from "../types/database.ts";
-import { ApiError } from "../utils/ApiError.ts";
-import { resolvePaging } from "../utils/pagination.ts";
+} from "../types/api.js";
+import type { ProductBadge, ProductImageRow } from "../types/database.js";
+import { ApiError } from "../utils/ApiError.js";
+import { resolvePaging } from "../utils/pagination.js";
 
 /**
  * The public site sees a hand-built projection, never a database row. Internal

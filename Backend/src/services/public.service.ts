@@ -1,9 +1,9 @@
-import { cacheKeys, getOrSet } from "../cache/index.ts";
-import * as galleryRepo from "../repositories/gallery.repository.ts";
-import * as settingsRepo from "../repositories/siteSettings.repository.ts";
-import type { PublicGalleryItem, PublicSiteSettings } from "../types/api.ts";
-import type { BusinessHour, GalleryCategory } from "../types/database.ts";
-import { ApiError } from "../utils/ApiError.ts";
+import { cacheKeys, getOrSet } from "../cache/index.js";
+import * as galleryRepo from "../repositories/gallery.repository.js";
+import * as settingsRepo from "../repositories/siteSettings.repository.js";
+import type { PublicGalleryItem, PublicSiteSettings } from "../types/api.js";
+import type { BusinessHour, GalleryCategory } from "../types/database.js";
+import { ApiError } from "../utils/ApiError.js";
 
 export async function listGallery(category?: GalleryCategory): Promise<PublicGalleryItem[]> {
   return getOrSet<PublicGalleryItem[]>(

@@ -1,4 +1,4 @@
-import { env, isProduction } from "./env.ts";
+import { env, isProduction } from "./env.js";
 
 /**
  * Small structured logger. Anything that looks like a credential is redacted

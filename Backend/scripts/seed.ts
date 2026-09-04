@@ -16,15 +16,15 @@ import { readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { CLOUDINARY_FOLDERS } from "../src/config/cloudinary.ts";
-import { env } from "../src/config/env.ts";
-import { adminDb } from "../src/config/supabase.ts";
-import { assetExists, uploadImage } from "../src/services/cloudinary.service.ts";
-import type { GalleryCategory, GallerySpan, ProductBadge } from "../src/types/database.ts";
+import { CLOUDINARY_FOLDERS } from "../src/config/cloudinary.js";
+import { env } from "../src/config/env.js";
+import { adminDb } from "../src/config/supabase.js";
+import { assetExists, uploadImage } from "../src/services/cloudinary.service.js";
+import type { GalleryCategory, GallerySpan, ProductBadge } from "../src/types/database.js";
 
-import { collections as seedCollections } from "./data/collections.data.ts";
-import { galleryItems as seedGallery } from "./data/gallery.data.ts";
-import { site as seedSite } from "./data/site.data.ts";
+import { collections as seedCollections } from "./data/collections.data.js";
+import { galleryItems as seedGallery } from "./data/gallery.data.js";
+import { site as seedSite } from "./data/site.data.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const ASSET_DIR = resolve(here, "../../frontend/src/assets");

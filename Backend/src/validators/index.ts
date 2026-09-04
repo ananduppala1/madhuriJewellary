@@ -4,8 +4,8 @@ import {
   GALLERY_CATEGORIES,
   GALLERY_SPANS,
   PRODUCT_BADGES,
-} from "../constants/index.ts";
-import { ADMIN_PAGE_BOUNDS, PUBLIC_PAGE_BOUNDS } from "../utils/pagination.ts";
+} from "../constants/index.js";
+import { ADMIN_PAGE_BOUNDS, PUBLIC_PAGE_BOUNDS } from "../utils/pagination.js";
 
 /**
  * `.strict()` everywhere on write bodies: an unexpected key is an error rather

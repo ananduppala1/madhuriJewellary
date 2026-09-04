@@ -1,9 +1,9 @@
-import { CLOUDINARY_FOLDERS } from "../config/cloudinary.ts";
-import * as invalidate from "../cache/cache.invalidation.ts";
-import * as collectionRepo from "../repositories/collection.repository.ts";
-import * as galleryRepo from "../repositories/gallery.repository.ts";
-import * as productRepo from "../repositories/product.repository.ts";
-import * as settingsRepo from "../repositories/siteSettings.repository.ts";
+import { CLOUDINARY_FOLDERS } from "../config/cloudinary.js";
+import * as invalidate from "../cache/cache.invalidation.js";
+import * as collectionRepo from "../repositories/collection.repository.js";
+import * as galleryRepo from "../repositories/gallery.repository.js";
+import * as productRepo from "../repositories/product.repository.js";
+import * as settingsRepo from "../repositories/siteSettings.repository.js";
 import type {
   BusinessHour,
   CollectionRow,
@@ -11,12 +11,12 @@ import type {
   GalleryItemRow,
   GallerySpan,
   SiteSettingsRow,
-} from "../types/database.ts";
-import { ApiError } from "../utils/ApiError.ts";
-import { ADMIN_PAGE_BOUNDS } from "../utils/pagination.ts";
-import { pathFromSlug, slugify } from "../utils/slug.ts";
-import * as media from "./cloudinary.service.ts";
-import type { UploadFile } from "./product.admin.service.ts";
+} from "../types/database.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ADMIN_PAGE_BOUNDS } from "../utils/pagination.js";
+import { pathFromSlug, slugify } from "../utils/slug.js";
+import * as media from "./cloudinary.service.js";
+import type { UploadFile } from "./product.admin.service.js";
 
 /* ══ collections ═══════════════════════════════════════════ */
 

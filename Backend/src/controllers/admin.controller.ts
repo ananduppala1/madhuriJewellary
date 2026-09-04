@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
-import * as admin from "../services/admin.service.ts";
-import * as products from "../services/product.admin.service.ts";
-import type { GalleryCategory, ProductBadge } from "../types/database.ts";
-import { ApiError } from "../utils/ApiError.ts";
-import { asyncHandler } from "../utils/asyncHandler.ts";
-import { buildMeta, created, message, ok, okList } from "../utils/response.ts";
+import * as admin from "../services/admin.service.js";
+import * as products from "../services/product.admin.service.js";
+import type { GalleryCategory, ProductBadge } from "../types/database.js";
+import { ApiError } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { buildMeta, created, message, ok, okList } from "../utils/response.js";
 
 function files(req: Request): Express.Multer.File[] {
   return Array.isArray(req.files) ? req.files : [];

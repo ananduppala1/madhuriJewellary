@@ -1,8 +1,8 @@
 import type { UploadApiOptions, UploadApiResponse } from "cloudinary";
-import { cloudinary } from "../config/cloudinary.ts";
-import { logger } from "../config/logger.ts";
-import { ApiError } from "../utils/ApiError.ts";
-import { safeFileStem } from "../utils/slug.ts";
+import { cloudinary } from "../config/cloudinary.js";
+import { logger } from "../config/logger.js";
+import { ApiError } from "../utils/ApiError.js";
+import { safeFileStem } from "../utils/slug.js";
 
 export type UploadedAsset = {
   publicId: string;

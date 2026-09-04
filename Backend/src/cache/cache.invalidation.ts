@@ -1,5 +1,5 @@
-import { CACHE_FAMILIES, type CacheFamily } from "./cache.constants.ts";
-import { invalidateFamilies } from "./cache.service.ts";
+import { CACHE_FAMILIES, type CacheFamily } from "./cache.constants.js";
+import { invalidateFamilies } from "./cache.service.js";
 
 /**
  * Which admin action retires which cached reads.

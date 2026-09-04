@@ -1,6 +1,6 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { env } from "./env.ts";
-import type { Database } from "../types/database.ts";
+import { env } from "./env.js";
+import type { Database } from "../types/database.js";
 
 /**
  * Two clients, deliberately.

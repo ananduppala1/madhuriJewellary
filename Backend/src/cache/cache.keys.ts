@@ -8,8 +8,8 @@ import {
   CACHE_TTL_PRODUCTS,
   CACHE_TTL_PRODUCT_DETAIL,
   CACHE_TTL_SITE_SETTINGS,
-} from "./cache.constants.ts";
-import type { CacheDescriptor, CacheKeyParts } from "./cache.types.ts";
+} from "./cache.constants.js";
+import type { CacheDescriptor, CacheKeyParts } from "./cache.types.js";
 
 /**
  * Every Redis key the application writes is built here.

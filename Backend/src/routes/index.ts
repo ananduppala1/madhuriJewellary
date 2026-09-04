@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { API_PREFIX } from "../constants/index.ts";
-import { adminRouter } from "./admin.routes.ts";
-import { authRouter } from "./auth.routes.ts";
-import { publicRouter } from "./public.routes.ts";
+import { API_PREFIX } from "../constants/index.js";
+import { adminRouter } from "./admin.routes.js";
+import { authRouter } from "./auth.routes.js";
+import { publicRouter } from "./public.routes.js";
 
 export const apiRouter: Router = Router();
 

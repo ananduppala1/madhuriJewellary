@@ -1,6 +1,6 @@
 import rateLimit, { type Options } from "express-rate-limit";
-import { env } from "../config/env.ts";
-import { ApiError } from "../utils/ApiError.ts";
+import { env } from "../config/env.js";
+import { ApiError } from "../utils/ApiError.js";
 
 const shared: Partial<Options> = {
   standardHeaders: "draft-7",
