@@ -360,15 +360,27 @@ VITE_API_BASE_URL = https://your-api.vercel.app
 VITE_PUBLIC_SITE_URL = https://your-shop.vercel.app
 ```
 
-**Do not set `VITE_API_BASE_URL` on the admin project.** Delete it if it is
-already there. The dashboard must call the API on **its own hostname**, and it
-does that through the rewrite in `AdminFrontend/vercel.json` — edit that file and
-put your API deployment's hostname in it:
+**`VITE_API_BASE_URL` is not used by the admin project in production** — a
+production build ignores it and always calls its own origin. Delete it there for
+clarity. The dashboard reaches the API through the rewrite in
+`AdminFrontend/vercel.json`, which is the single place the API's address lives:
 
 ```json
 { "source": "/api/:path*",
   "destination": "https://your-api.vercel.app/api/:path*" }
 ```
+
+> The destination must be the **API/Backend** deployment — not the admin's own
+> URL. Pointing it at the admin makes the dashboard rewrite `/api/*` to itself,
+> and Vercel answers `508 INFINITE_LOOP_DETECTED`.
+>
+> This project's three deployments:
+>
+> | Project | URL |
+> | --- | --- |
+> | Public site (`frontend`) | `https://madhuri-jewellary.vercel.app` |
+> | Admin (`AdminFrontend`) | `https://madhuri-jewellary-klon.vercel.app` |
+> | **API (`Backend`)** | **`https://madhuri-jewellary-backend.vercel.app`** ← the rewrite destination |
 
 That rewrite is the whole reason admin login works in a private window. Vercel
 serves it at the edge, so it costs no extra function invocation, and it removes

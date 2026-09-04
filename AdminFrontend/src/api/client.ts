@@ -10,18 +10,23 @@
 /**
  * Where the API is, from the browser's point of view.
  *
- * Empty means *same origin*, and that is the deployed shape: the dashboard
- * rewrites `/api/*` to the API (see `vercel.json`), so the session cookie is
- * stored against the dashboard's own hostname. A first-party cookie is the only
- * kind a browser will reliably keep — Chrome Incognito, Safari and Firefox all
- * drop or partition third-party cookies, so an API served from a separate
- * domain simply cannot hold a session there.
+ * A built dashboard ALWAYS calls its own origin, and that is deliberate. The
+ * deployment rewrites `/api/*` to the API (see `vercel.json`), so the session
+ * cookie is stored against the dashboard's own hostname. A first-party cookie is
+ * the only kind a browser will reliably keep: Chrome Incognito blocks
+ * third-party cookies outright, Safari blocks them, Firefox partitions them, and
+ * Chrome is phasing them out everywhere. An API on a separate domain therefore
+ * cannot hold a session — login returns 200, the cookie is dropped on arrival,
+ * and the next request is a 401. No cookie attribute can override that.
  *
- * Only a local dev server, which has no such rewrite, needs an absolute URL.
+ * `VITE_API_BASE_URL` is honoured in development only, where `vite dev` has no
+ * such rewrite. In a production build this collapses to `""` at compile time, so
+ * a stale or mistaken value in the hosting dashboard cannot reintroduce the
+ * cross-site call. The API's address belongs in `vercel.json` — one place, which
+ * cannot silently disagree with a second one.
  */
 const BASE_URL = (
-  import.meta.env["VITE_API_BASE_URL"] ??
-  (import.meta.env.DEV ? "http://localhost:5000" : "")
+  import.meta.env.DEV ? (import.meta.env["VITE_API_BASE_URL"] ?? "http://localhost:5000") : ""
 ).replace(/\/+$/, "");
 
 const API = `${BASE_URL}/api/v1`;
