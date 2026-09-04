@@ -2,7 +2,7 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import cors, { type CorsOptions } from "cors";
 import express, { type Express, type RequestHandler } from "express";
-import helmet from "helmet";
+import helmetDefault, { type HelmetOptions } from "helmet";
 import { cacheMetrics } from "./cache/cache.metrics.js";
 import {
   allowAnyOrigin,
@@ -21,6 +21,19 @@ import { publicLimiter } from "./middlewares/rateLimit.middleware.js";
 import { requestContext } from "./middlewares/requestContext.middleware.js";
 import { apiRouter } from "./routes/index.js";
 import { ApiError } from "./utils/ApiError.js";
+
+/**
+ * helmet publishes separate CommonJS and ESM type declarations. This build
+ * resolves the ESM ones, where the default export is the middleware factory;
+ * Vercel's function builder resolves the CommonJS ones, where the same import
+ * widens to the module namespace and `helmet(...)` stops type-checking with
+ * TS2349. The imported value is callable under either module system, so name
+ * that one shape here. Options are still checked against helmet's own
+ * `HelmetOptions`.
+ */
+const helmet = helmetDefault as unknown as (
+  options?: Readonly<HelmetOptions>,
+) => RequestHandler;
 
 /**
  * Origins are matched against an explicit allow-list. `Access-Control-Allow-
