@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/**
+ * A working tool, not a showroom. The palette is a cool neutral stack with one
+ * warm accent borrowed from the public site's gold — enough to feel related to
+ * the brand, restrained enough to look at all day.
+ */
+
+@theme {
+  --color-canvas: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-surface-2: #f9fafb;
+  --color-line: #e4e7ec;
+  --color-line-strong: #d0d5dd;
+
+  --color-ink: #101828;
+  --color-ink-2: #475467;
+  --color-ink-3: #98a2b3;
+
+  --color-accent: #a8801f;
+  --color-accent-hover: #8c6a17;
+  --color-accent-soft: #fdf6e6;
+  --color-accent-line: #ecdcb0;
+
+  --color-sidebar: #16130e;
+  --color-sidebar-hover: #241f17;
+  --color-sidebar-text: #b6ada0;
+
+  --color-success: #067647;
+  --color-success-soft: #ecfdf3;
+  --color-warning: #b54708;
+  --color-warning-soft: #fffaeb;
+  --color-danger: #b42318;
+  --color-danger-soft: #fef3f2;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --radius-card: 0.625rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Focus is never removed, only made to match the palette — keyboard users
+     have to be able to see where they are. */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: -0.011em;
+    color: var(--color-ink);
+  }
+
+  button {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-ink);
+    margin-bottom: 0.375rem;
+  }
+
+  .field-hint {
+    font-size: 0.75rem;
+    color: var(--color-ink-3);
+    margin-top: 0.375rem;
+  }
+
+  .field-error {
+    font-size: 0.75rem;
+    color: var(--color-danger);
+    margin-top: 0.375rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

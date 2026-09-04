@@ -1,0 +1,362 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+/*
+ * ─────────────────────────────────────────────────────────────
+ *  MADHURI JEWELLERS — Design System
+ *  "Assay" — ivory paper, gold leaf, hallmark hairlines.
+ *
+ *  The site is LIGHT by default (warm ivory + gold).
+ *  Dark passages — the rate bar, image banners, the CTA band and
+ *  the footer — are opted in with the `.on-dark` class, which
+ *  flips the same semantic tokens. Components never need to know
+ *  which side they are on.
+ *
+ *  Display : Marcellus  (inscriptional roman — engraved gold)
+ *  Body    : Jost       (geometric sans — modern, quiet)
+ *
+ *  Never hardcode a colour in a component. Use these tokens.
+ * ─────────────────────────────────────────────────────────────
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-display: "Marcellus", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 2px;
+  --radius-2xl: 2px;
+  --radius-3xl: 4px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  /* `brand` is the readable gold for the current surface:
+     deep bronze on ivory, bright gold on ink. */
+  --color-brand: var(--brand);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-light: var(--gold-light);
+  --color-champagne: var(--champagne);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+}
+
+:root {
+  /* Fixed brand palette */
+  --gold: #c9a227;
+  --gold-deep: #8a6e15;
+  --gold-light: #e8c766;
+  --champagne: #f5e7b2;
+  --ink: #0b0b0b;
+
+  /* ── Light theme (default) ───────────────────────────────── */
+  --background: #fbf7f0;
+  --surface: #f4ecdd;
+  --foreground: #1e1810;
+  --card: #ffffff;
+  --card-foreground: #1e1810;
+  --popover: #ffffff;
+  --popover-foreground: #1e1810;
+  --primary: #6f5712;
+  --primary-foreground: #fdfaf4;
+  --secondary: #f4ecdd;
+  --secondary-foreground: #4a3a12;
+  --muted: #f1e9da;
+  --muted-foreground: #6b6152;
+  --accent: #c9a227;
+  --accent-foreground: #1e1810;
+  --destructive: #a03725;
+  --destructive-foreground: #ffffff;
+  --border: rgba(138, 110, 21, 0.22);
+  --input: rgba(138, 110, 21, 0.3);
+  --ring: #7a6112;
+  --brand: #7a6112;
+
+  --gradient-gold: linear-gradient(
+    100deg,
+    #5c470e 0%,
+    #7a6112 28%,
+    #9c7d18 50%,
+    #7a6112 72%,
+    #5c470e 100%
+  );
+  --gradient-vignette: radial-gradient(
+    ellipse 90% 60% at 50% 0%,
+    rgba(201, 162, 39, 0.16),
+    transparent 70%
+  );
+  --gradient-surface: linear-gradient(180deg, #ffffff 0%, #fbf6ec 100%);
+
+  --shadow-soft: 0 1px 2px rgba(94, 74, 20, 0.06), 0 14px 34px -20px rgba(94, 74, 20, 0.3);
+  --shadow-lift: 0 2px 4px rgba(94, 74, 20, 0.08), 0 32px 64px -30px rgba(94, 74, 20, 0.42);
+  --shadow-gold: 0 0 0 1px rgba(138, 110, 21, 0.28), 0 24px 52px -26px rgba(138, 110, 21, 0.5);
+
+  --glass-bg: rgba(251, 247, 240, 0.86);
+}
+
+/* ── Dark passages ─────────────────────────────────────────── */
+.on-dark {
+  --background: #0b0b0b;
+  --surface: #111111;
+  --foreground: #ffffff;
+  --card: #111111;
+  --card-foreground: #ffffff;
+  --popover: #171717;
+  --popover-foreground: #ffffff;
+  --primary: #c9a227;
+  --primary-foreground: #0b0b0b;
+  --secondary: #171717;
+  --secondary-foreground: #f5e7b2;
+  --muted: #1a1a1a;
+  --muted-foreground: #bdbdbd;
+  --accent: #f5e7b2;
+  --accent-foreground: #0b0b0b;
+  --destructive: #d4674f;
+  --destructive-foreground: #ffffff;
+  --border: rgba(201, 162, 39, 0.2);
+  --input: rgba(201, 162, 39, 0.28);
+  --ring: #c9a227;
+  --brand: #c9a227;
+
+  --gradient-gold: linear-gradient(
+    100deg,
+    #8a6e15 0%,
+    #c9a227 28%,
+    #f5e7b2 50%,
+    #c9a227 72%,
+    #8a6e15 100%
+  );
+  --gradient-surface: linear-gradient(180deg, #141414 0%, #0d0d0d 100%);
+  --shadow-soft: 0 1px 0 rgba(201, 162, 39, 0.08), 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+  --shadow-lift: 0 1px 0 rgba(201, 162, 39, 0.16), 0 36px 72px -32px rgba(0, 0, 0, 1);
+  --shadow-gold: 0 0 0 1px rgba(201, 162, 39, 0.28), 0 24px 56px -28px rgba(201, 162, 39, 0.4);
+  --glass-bg: rgba(11, 11, 11, 0.78);
+
+  color: var(--foreground);
+}
+
+/* The class is kept so shadcn primitives resolve their dark variant. */
+.dark {
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    /* Not scroll-behavior: smooth globally — that would make React Router's
+       ScrollRestoration animate the jump-to-top on every page navigation
+       instead of landing instantly. The "back to top" button opts into
+       smooth scrolling explicitly via JS instead. */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-weight: 350;
+    font-feature-settings:
+      "liga" 1,
+      "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: #1e1810;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 3px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1e9da;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d8c48a;
+    border: 2px solid #f1e9da;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-deep);
+  }
+
+  img {
+    color: transparent;
+  }
+}
+
+/* ── Utilities ─────────────────────────────────────────────── */
+
+@utility text-gradient-gold {
+  background: var(--gradient-gold);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@utility eyebrow {
+  font-size: 0.625rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+@utility rule-gold {
+  height: 1px;
+  background: var(--gradient-gold);
+  opacity: 0.8;
+}
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+@utility shadow-lift {
+  box-shadow: var(--shadow-lift);
+}
+
+@utility shadow-gold {
+  box-shadow: var(--shadow-gold);
+}
+
+@utility surface-card {
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-border);
+}
+
+@utility glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid var(--color-border);
+}
+
+@utility vignette-top {
+  background-image: var(--gradient-vignette);
+}
+
+/* Signature: hallmark corner ticks — the assay-certificate frame */
+@utility hallmark-frame {
+  position: relative;
+}
+
+/* ── Keyframes ─────────────────────────────────────────────── */
+
+@keyframes mj-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility marquee-track {
+  animation: mj-marquee 32s linear infinite;
+}
+
+@keyframes mj-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@utility animate-shimmer {
+  animation: mj-shimmer 7s linear infinite;
+}
+
+@keyframes mj-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-rise {
+  animation: mj-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes mj-glow {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@utility animate-glow {
+  animation: mj-glow 5s ease-in-out infinite;
+}
+
+/* ── Motion preferences ────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
