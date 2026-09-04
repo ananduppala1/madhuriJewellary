@@ -282,7 +282,12 @@ Required for the admin dashboard to be able to log in at all:
 | Variable | Value |
 | --- | --- |
 | `COOKIE_SECURE` | `true` |
-| `COOKIE_SAME_SITE` | `none` |
+| `COOKIE_SAME_SITE` | `lax` |
+
+`lax`, not `none`, because the dashboard reaches the API through a same-origin
+rewrite (Step 5) — the session cookie is first-party, so it never needs the
+cross-site relaxation, and `lax` additionally blocks CSRF. Leave `COOKIE_DOMAIN`
+unset so the cookie stays host-only.
 
 Set these once you know your frontend URLs (Step 5 comes back to this):
 
@@ -352,9 +357,35 @@ VITE_API_BASE_URL = https://your-api.vercel.app
 **Admin project** (`AdminFrontend`) → Environment Variables:
 
 ```
-VITE_API_BASE_URL    = https://your-api.vercel.app
 VITE_PUBLIC_SITE_URL = https://your-shop.vercel.app
 ```
+
+**Do not set `VITE_API_BASE_URL` on the admin project.** Delete it if it is
+already there. The dashboard must call the API on **its own hostname**, and it
+does that through the rewrite in `AdminFrontend/vercel.json` — edit that file and
+put your API deployment's hostname in it:
+
+```json
+{ "source": "/api/:path*",
+  "destination": "https://your-api.vercel.app/api/:path*" }
+```
+
+That rewrite is the whole reason admin login works in a private window. Vercel
+serves it at the edge, so it costs no extra function invocation, and it removes
+the CORS preflight that a cross-origin API needs on every write.
+
+> **Why this matters more than it looks.** If the dashboard calls the API on a
+> separate domain, the session cookie is a **third-party cookie**. Chrome
+> Incognito blocks third-party cookies by default, so login returns `200`, the
+> browser throws the cookie away, the next request is a `401`, and you land back
+> on `/login`. Safari blocks them too, Firefox partitions them, and Chrome is
+> phasing them out for ordinary windows. `SameSite=None; Secure` does not help —
+> it is required for cross-site cookies, but it is ignored once the browser has
+> decided not to store third-party cookies at all. Serving the API from the
+> dashboard's own origin is the only durable fix.
+
+The public site is unaffected: it calls the API cross-origin, but every endpoint
+it uses is unauthenticated, so no cookie is involved.
 
 No trailing slash on any of these; the client appends `/api/v1` itself.
 
@@ -396,8 +427,13 @@ Blank out `ADMIN_PASSWORD` afterwards.
 | 6 | Admin image upload | file appears in Cloudinary |
 | 7 | Edit a product, reload the public site | change is visible |
 
-Check 5 is the one that catches cookie problems. If login works but a refresh
-signs you out, `COOKIE_SAME_SITE=none` and `COOKIE_SECURE=true` are not both set.
+Run check 5 **in a private/Incognito window**. That is the check that catches
+cookie problems, and a normal window will hide them: a normal window may still
+accept third-party cookies, so a dashboard wired to a separate API domain appears
+to work there and fails for everyone in a private window. If login succeeds and
+you are bounced back to `/login`, the dashboard is not going through the
+`/api/:path*` rewrite — `VITE_API_BASE_URL` is still set on the admin project, or
+the rewrite's destination is wrong.
 
 ---
 
@@ -411,7 +447,8 @@ signs you out, `COOKIE_SAME_SITE=none` and `COOKIE_SECURE=true` are not both set
 | `FUNCTION_INVOCATION_FAILED` | a genuine runtime crash | Vercel → Deployment → **Logs**; the request-id in the log matches the `x-request-id` header |
 | Frontend gets a CORS error | frontend URL not in the allow-list | set `EXTRA_ALLOWED_ORIGINS=https://*.vercel.app` on the **backend**, redeploy |
 | Frontend calls `localhost:5000` | `VITE_API_BASE_URL` set but not rebuilt | redeploy the frontend |
-| Login succeeds, next request is `401` | cross-site cookie dropped | `COOKIE_SECURE=true`, `COOKIE_SAME_SITE=none`, `COOKIE_DOMAIN` unset |
+| Login succeeds, next request is `401` | cross-site cookie dropped | `COOKIE_SECURE=true`, `COOKIE_SAME_SITE=lax`, `COOKIE_DOMAIN` unset, and the admin must reach the API through its own origin (Step 5) |
+| Admin login works normally, bounces to `/login` in Incognito | the session cookie is third-party, and Incognito blocks those | unset `VITE_API_BASE_URL` on the admin project and point the `/api/:path*` rewrite in `AdminFrontend/vercel.json` at your API. Changing cookie attributes cannot fix this |
 | API returns a Vercel **login HTML page** instead of JSON | Deployment Protection | Settings → **Deployment Protection** → disable Vercel Authentication for Preview, or use the production URL |
 | `/health` shows `redis: "degraded"` | Redis unreachable | harmless — reads go to Supabase. Set `REDIS_ENABLED=false` to silence it |
 | Uploads fail over ~4 MB | Vercel request body limit | lower `MAX_UPLOAD_SIZE_MB`, or upload to Cloudinary directly from the browser |

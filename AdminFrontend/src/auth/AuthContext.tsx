@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { ApiError, setSessionLostHandler } from "@/api/client";
 import { auth } from "@/api/endpoints";
@@ -25,13 +33,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [admin, setAdmin] = useState<Admin | null>(null);
   const [initialising, setInitialising] = useState(true);
 
+  /**
+   * Bumped by every deliberate authentication change. The session check started
+   * at mount may only write state while this is unchanged, so a slow `/auth/me`
+   * that was sent before a sign-in — and is therefore answered 401 — cannot land
+   * afterwards and erase the session it predates.
+   */
+  const authGeneration = useRef(0);
+
   useEffect(() => {
     const controller = new AbortController();
+    const startedAt = authGeneration.current;
+    const stillCurrent = () => authGeneration.current === startedAt;
 
     auth
       .me({ signal: controller.signal })
-      .then((result) => setAdmin(result.admin))
-      .catch(() => setAdmin(null))
+      .then((result) => {
+        if (stillCurrent()) setAdmin(result.admin);
+      })
+      .catch(() => {
+        if (stillCurrent()) setAdmin(null);
+      })
       .finally(() => {
         if (!controller.signal.aborted) setInitialising(false);
       });
@@ -48,7 +70,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = useCallback(async (email: string, password: string) => {
     const result = await auth.login(email, password);
+    // Supersede the mount-time check before publishing the new session, and stop
+    // "checking" — the backend has just told us exactly who this is.
+    authGeneration.current += 1;
     setAdmin(result.admin);
+    setInitialising(false);
   }, []);
 
   const signOut = useCallback(async () => {
@@ -58,6 +84,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // A logout that fails server-side must still clear the client state.
       if (!(error instanceof ApiError)) throw error;
     } finally {
+      // Same guard in the other direction: a late session check must not be able
+      // to resurrect an account that has just signed out.
+      authGeneration.current += 1;
       setAdmin(null);
     }
   }, []);
